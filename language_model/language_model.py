@@ -27,11 +27,6 @@ class LanguageModel:
         self.calculate_nodes_probability(self.probability_nodes, self.total_words_count)
         self.sorted_probability_nodes = sort_probability_list(self.probability_nodes.values())
 
-        print([ [node.word, node.probability] for node in self.sorted_probability_nodes[:5]])
-        for node2 in self.sorted_probability_nodes[:5]:
-            print("Word: {}, Count: {}, Prob: {}, Children: {}, ProbChildren: {}".format(node2.word, node2.word_count, node2.probability, len(node2.children_nodes), len(node2.sorted_probability_nodes)))
-            print([[node.word, node.probability] for node in node2.sorted_probability_nodes[:5]])
-
         print("Language model training has finished")
 
     def build_word_occurrence_probability_node(self, word, word_count, word_occurrences):
@@ -58,8 +53,14 @@ class LanguageModel:
         for word, probability_node in probability_nodes.items():
             probability_node.calculate_probability(total_words_count)
 
-    def save_language_model(self):
-        pickle_file = open('language_model.pickle', 'wb')
+    def test_language_model(self):
+        print([ [node.word, node.probability] for node in self.sorted_probability_nodes[:5]])
+        for node2 in self.sorted_probability_nodes[:5]:
+            print("Word: {}, Count: {}, Prob: {}, Children: {}, ProbChildren: {}".format(node2.word, node2.word_count, node2.probability, len(node2.children_nodes), len(node2.sorted_probability_nodes)))
+            print([[node.word, node.probability] for node in node2.sorted_probability_nodes[:5]])
+
+    def save_language_model(self, path):
+        pickle_file = open(path, 'wb')
         pickle.dump(self, pickle_file)
 
 def sort_probability_list(probability_nodes):
