@@ -1,5 +1,6 @@
 import re
 import os
+import time
 
 
 def extract_all_sentences_from_files(dir_location):
@@ -8,11 +9,12 @@ def extract_all_sentences_from_files(dir_location):
     :param dir_location:
     :return: a list of sentences
     """
+    start_time = time.time()
 
     sentences = list()
     files = os.listdir(dir_location)
 
-    print("FilesCount={}, Message=\"Starting to extract senteces from files\"".format(len(files)))
+    print("FilesCount={}, Message=\"Starting to extract sentences from files\"".format(len(files)))
 
     for file in files:
         file_path = os.path.join(dir_location, file)
@@ -20,11 +22,26 @@ def extract_all_sentences_from_files(dir_location):
         sentences_file = token_to_sentence(file_path)
         sentences.extend(sentences_file)
 
-        print("File_Path={}, SentecesCount={}, Message=\"Extracted sentences from file.\"".format(file_path, len(sentences_file)))
+        # print("File_Path={}, SentecesCount={}, Message=\"Extracted sentences from file.\"".format(file_path, len(sentences_file)))
 
-    print("FilesCount={}, TotalSentencesCount={}, Message=\"Finished extracting sentences from files\"".format(len(files), len(sentences)))
+    print("ElapsedTime={}s, FilesCount={}, TotalSentencesCount={}, Message=\"Finished extracting sentences from files\"".format(format(time.time() - start_time, ".2f"), len(files), len(sentences)))
 
     return sentences
+
+
+def convert_sentences_to_list_of_words(sentences):
+
+    start_time = time.time()
+    print("SentencesCount={}, Message=\"Begin converting sentences to list of words\"".format(len(sentences)))
+
+    sentences_to_words = list()
+
+    for sentence in sentences:
+        sentences_to_words.append(token_to_words(sentence))
+
+    print("ElapsedTime={}s, SentencesCount={}, Message=\"Finished converting sentences to list of words\"".format(format(time.time() - start_time, ".2f"), len(sentences)))
+
+    return sentences_to_words
 
 
 def token_to_sentence(file_path):
@@ -66,15 +83,6 @@ def token_to_words(sentence):
     regex = '([\w]{0,})'
     regex_of_word = re.findall(regex, sentence)
 
-    words = [x for x in regex_of_word if x is not '']
+    words = [x.lower() for x in regex_of_word if x is not '']
 
     return words
-
-
-if __name__ == '__main__':
-    sentences = extract_all_sentences_from_files("text_corpus")
-
-    for sentence in sentences:
-        print("S: {}     | W: {}".format(sentence, token_to_words(sentence)))
-
-    # print(sentences)
