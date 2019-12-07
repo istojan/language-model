@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# custom .gitignore stuff
+*.pyc 
+output/
