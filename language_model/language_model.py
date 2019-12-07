@@ -8,7 +8,7 @@ class LanguageModel:
     def __init__(self):
         self.total_words_count = 0
         self.probability_nodes = dict()
-        self.sorted_probabiliy_nodes = list()
+        self.sorted_probability_nodes = list()
 
     def build_language_model(self, word_occurrences_model):
 
@@ -24,6 +24,7 @@ class LanguageModel:
 
         self.calculate_nodes_probability(self.probability_nodes, self.total_words_count)
         self.sorted_probability_nodes = sort_probability_list(self.probability_nodes.values())
+        # self.sorted_probability_nodes = self.sorted_probability_nodes[:1000]
 
         print("ElapsedTime={}s, TotalWordsCount={}, TotalDistinctWordsCount={}, Message=\"Finished training language model from word occurrences model\"".format(format(time.time() - start_time, ".2f"), self.total_words_count, len(self.probability_nodes)))
 
@@ -44,6 +45,8 @@ class LanguageModel:
         self.calculate_nodes_probability(probability_node.children_nodes, probability_node.word_count)
 
         probability_node.sorted_probability_nodes = sort_probability_list(probability_node.children_nodes.values())
+        # keep only top 1000 sorted probability nodes
+        # probability_node.sorted_probability_nodes = probability_node.sorted_probability_nodes[:1000]
 
         return probability_node
 
@@ -52,10 +55,10 @@ class LanguageModel:
             probability_node.calculate_probability(total_words_count)
 
     def test_language_model(self):
-        print([ [node.word, node.probability] for node in self.sorted_probability_nodes[:5]])
-        for node2 in self.sorted_probability_nodes[:5]:
-            print("Word: {}, Count: {}, Prob: {}, Children: {}, ProbChildren: {}".format(node2.word, node2.word_count, node2.probability, len(node2.children_nodes), len(node2.sorted_probability_nodes)))
-            print([[node.word, node.probability] for node in node2.sorted_probability_nodes[:5]])
+        print([ [node] for node in self.sorted_probability_nodes[:5]])
+        # for node2 in self.sorted_probability_nodes[:5]:
+            # print("Word: {}, Count: {}, Prob: {}, Children: {}, ProbChildren: {}".format(node2.word, node2.word_count, node2.probability, len(node2.children_nodes), len(node2.sorted_probability_nodes)))
+            # print([[node.word, node.probability] for node in node2.sorted_probability_nodes[:5]])
 
     def prepare_model_data_for_saving(self):
         return [self.total_words_count, self.probability_nodes, self.sorted_probability_nodes]

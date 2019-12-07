@@ -19,3 +19,8 @@ class Node:
             self.children_nodes[next_word] = Node(next_word)
 
         return self.children_nodes[next_word]
+
+    # def trim_node(self, leave_count=1000):
+    #     sorted_nodes = sorted(self.children_nodes, key=operator.attrgetter('word_count'), reverse=True)
+    #     for node in sorted_nodes[leave_count:]:
+    #         del self.children_nodes[node.word]
