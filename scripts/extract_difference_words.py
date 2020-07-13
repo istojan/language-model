@@ -1,6 +1,5 @@
-import re
 import time
-from text_helpers.text_tokenizer import extract_all_sentences_from_files, convert_sentences_to_list_of_words, extract_words_from_dictionary, contains_ascii_letter, contains_digit
+from helpers.text_tokenizer import extract_all_sentences_from_files, convert_sentences_to_list_of_words, get_dictionary_words
 from operator import itemgetter
 
 
@@ -17,14 +16,14 @@ def extract_difference_words():
 
     sentences_as_list_words = convert_sentences_to_list_of_words(sentences, set(), True)
 
-    dictionary_words = extract_words_from_dictionary(MK_DICTIONARY_PATH)
+    dictionary_words = get_dictionary_words(MK_DICTIONARY_PATH)
 
     difference_words = dict()
 
     for words in sentences_as_list_words:
 
         for word in words:
-            if word in dictionary_words or (contains_ascii_letter(word) or contains_digit(word)):
+            if word in dictionary_words:
                 continue
 
             word_count = difference_words.get(word, 0)

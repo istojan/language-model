@@ -1,6 +1,6 @@
 import re
 import time
-from text_helpers.text_tokenizer import extract_all_sentences_from_files, convert_sentences_to_list_of_words
+from helpers.text_tokenizer import extract_all_sentences_from_files, convert_sentences_to_list_of_words
 from operator import itemgetter
 
 INPUT_DIR = "../big_corpus"

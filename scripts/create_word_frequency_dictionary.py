@@ -1,9 +1,9 @@
 import os
 from configuration import settings
-from text_helpers.text_tokenizer import extract_all_sentences_from_files, convert_sentences_to_list_of_words, read_names
+from helpers.text_tokenizer import extract_all_sentences_from_files, convert_sentences_to_list_of_words, read_names
 
 
-def convert_dictionary_to_word_frequency_dictionary(dictionary_path, corpus_directory)
+def convert_dictionary_to_word_frequency_dictionary(dictionary_path, corpus_directory):
 
     sentences = extract_all_sentences_from_files(corpus_directory)
     names = read_names(settings["male_names_file_path"], settings["female_names_file_path"])
