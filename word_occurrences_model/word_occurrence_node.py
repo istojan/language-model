@@ -6,15 +6,23 @@ class Node:
         self.word_count = 0
         self.children_nodes = dict()
         self.word_occurrence_count = dict()
-        # self.words_occurrence_sorted_list = list()
 
     def add_occurrence(self, next_word):
-        # print("Prev word: {}, Next word: {}, Adding occurence ".format(self.word, next_word))
+        """
+        For a given next word in the tree, update the child node occurrence word count.
+        If this is the first occurrence of the word in the subtree, we set the count to 1.
+        """
+
         current_count = self.word_occurrence_count.get(next_word, 0)
         current_count += 1
         self.word_occurrence_count[next_word] = current_count
 
     def get_or_add_node(self, next_word):
+        """
+        For a given next word in the tree, return the child node for it.
+        If no node exists since this is the first occurrence of the new word in this subtree, create a node for it.
+        """
+
         if next_word not in self.children_nodes:
             self.children_nodes[next_word] = Node(next_word)
 
