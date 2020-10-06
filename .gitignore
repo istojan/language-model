@@ -106,3 +106,5 @@ venv.bak/
 # custom .gitignore stuff
 *.pyc 
 output/
+corpus/
+.idea
